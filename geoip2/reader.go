@@ -2,14 +2,12 @@
 //
 // See GEOIP-LIBRARY-LICENSE for license on this file
 //
-// Modified slightly for ffjson
+// Modified slightly for use with standard encoding/json
 //
 // Package geoip2 provides a wrapper around the maxminddb package for
 // easy use with the MaxMind GeoIP2 and GeoLite2 databases. The records for
 // the IP address is returned from this package as well-formed structures
 // that match the internal layout of data from MaxMind.
-
-//go:generate ffjson --nodecoder $GOFILE
 
 package geoip2
 
@@ -21,160 +19,145 @@ import (
 
 type (
 	TheCity struct {
-		GeoNameID uint              `maxminddb:"geoname_id"`
-		Names     map[string]string `maxminddb:"names"`
+		GeoNameID uint              `maxminddb:"geoname_id" json:"GeoNameID"`
+		Names     map[string]string `maxminddb:"names"      json:"Names"`
 	}
 	Continent struct {
-		Code      string            `maxminddb:"code"`
-		GeoNameID uint              `maxminddb:"geoname_id"`
-		Names     map[string]string `maxminddb:"names"`
+		Code      string            `maxminddb:"code"       json:"Code"`
+		GeoNameID uint              `maxminddb:"geoname_id" json:"GeoNameID"`
+		Names     map[string]string `maxminddb:"names"      json:"Names"`
 	}
 	TheCountry struct {
-		GeoNameID uint              `maxminddb:"geoname_id"`
-		IsoCode   string            `maxminddb:"iso_code"`
-		Names     map[string]string `maxminddb:"names"`
+		GeoNameID uint              `maxminddb:"geoname_id" json:"GeoNameID"`
+		IsoCode   string            `maxminddb:"iso_code"   json:"IsoCode"`
+		Names     map[string]string `maxminddb:"names"      json:"Names"`
 	}
 	Location struct {
-		Latitude  float64 `maxminddb:"latitude"`
-		Longitude float64 `maxminddb:"longitude"`
-		MetroCode uint    `maxminddb:"metro_code"`
-		TimeZone  string  `maxminddb:"time_zone"`
+		Latitude  float64 `maxminddb:"latitude"   json:"Latitude"`
+		Longitude float64 `maxminddb:"longitude"  json:"Longitude"`
+		MetroCode uint    `maxminddb:"metro_code" json:"MetroCode"`
+		TimeZone  string  `maxminddb:"time_zone"  json:"TimeZone"`
 	}
 	Postal struct {
-		Code string `maxminddb:"code"`
+		Code string `maxminddb:"code" json:"Code"`
 	}
 	RegisteredCountry struct {
-		GeoNameID uint              `maxminddb:"geoname_id"`
-		IsoCode   string            `maxminddb:"iso_code"`
-		Names     map[string]string `maxminddb:"names"`
+		GeoNameID uint              `maxminddb:"geoname_id" json:"GeoNameID"`
+		IsoCode   string            `maxminddb:"iso_code"   json:"IsoCode"`
+		Names     map[string]string `maxminddb:"names"      json:"Names"`
 	}
 	RepresentedCountry struct {
-		GeoNameID uint              `maxminddb:"geoname_id"`
-		IsoCode   string            `maxminddb:"iso_code"`
-		Names     map[string]string `maxminddb:"names"`
-		Type      string            `maxminddb:"type"`
+		GeoNameID uint              `maxminddb:"geoname_id" json:"GeoNameID"`
+		IsoCode   string            `maxminddb:"iso_code"   json:"IsoCode"`
+		Names     map[string]string `maxminddb:"names"      json:"Names"`
+		Type      string            `maxminddb:"type"       json:"Type"`
 	}
 	Subdivision struct {
-		GeoNameID uint              `maxminddb:"geoname_id"`
-		IsoCode   string            `maxminddb:"iso_code"`
-		Names     map[string]string `maxminddb:"names"`
+		GeoNameID uint              `maxminddb:"geoname_id" json:"GeoNameID"`
+		IsoCode   string            `maxminddb:"iso_code"   json:"IsoCode"`
+		Names     map[string]string `maxminddb:"names"      json:"Names"`
 	}
 	Traits struct {
-		IsAnonymousProxy    bool `maxminddb:"is_anonymous_proxy"`
-		IsSatelliteProvider bool `maxminddb:"is_satellite_provider"`
+		IsAnonymousProxy    bool `maxminddb:"is_anonymous_proxy"    json:"IsAnonymousProxy"`
+		IsSatelliteProvider bool `maxminddb:"is_satellite_provider" json:"IsSatelliteProvider"`
 	}
 )
 
-// The City structure corresponds to the data in the GeoIP2/GeoLite2 City
-// databases.
+// City corresponds to the data in the GeoIP2/GeoLite2 City databases.
 type City struct {
-	City               TheCity            `maxminddb:"city"`
-	Continent          Continent          `maxminddb:"continent"`
-	Country            TheCountry         `maxminddb:"country"`
-	Location           Location           `maxminddb:"location"`
-	Postal             Postal             `maxminddb:"postal"`
-	RegisteredCountry  RegisteredCountry  `maxminddb:"registered_country"`
-	RepresentedCountry RepresentedCountry `maxminddb:"represented_country"`
-	Subdivisions       []Subdivision      `maxminddb:"subdivisions"`
-	Traits             Traits             `maxminddb:"traits"`
+	City               TheCity            `maxminddb:"city"                json:"City"`
+	Continent          Continent          `maxminddb:"continent"           json:"Continent"`
+	Country            TheCountry         `maxminddb:"country"             json:"Country"`
+	Location           Location           `maxminddb:"location"            json:"Location"`
+	Postal             Postal             `maxminddb:"postal"              json:"Postal"`
+	RegisteredCountry  RegisteredCountry  `maxminddb:"registered_country"  json:"RegisteredCountry"`
+	RepresentedCountry RepresentedCountry `maxminddb:"represented_country" json:"RepresentedCountry"`
+	Subdivisions       []Subdivision      `maxminddb:"subdivisions"        json:"Subdivisions"`
+	Traits             Traits             `maxminddb:"traits"              json:"Traits"`
 }
 
-// The Country structure corresponds to the data in the GeoIP2/GeoLite2
-// Country databases.
+// Country corresponds to the data in the GeoIP2/GeoLite2 Country databases.
 type Country struct {
-	Continent          Continent          `maxminddb:"continent"`
-	Country            TheCountry         `maxminddb:"country"`
-	RegisteredCountry  RegisteredCountry  `maxminddb:"registered_country"`
-	RepresentedCountry RepresentedCountry `maxminddb:"represented_country"`
-	Subdivisions       []Subdivision      `maxminddb:"subdivisions"`
-	Traits             Traits             `maxminddb:"traits"`
+	Continent          Continent          `maxminddb:"continent"           json:"Continent"`
+	Country            TheCountry         `maxminddb:"country"             json:"Country"`
+	RegisteredCountry  RegisteredCountry  `maxminddb:"registered_country"  json:"RegisteredCountry"`
+	RepresentedCountry RepresentedCountry `maxminddb:"represented_country" json:"RepresentedCountry"`
+	Subdivisions       []Subdivision      `maxminddb:"subdivisions"        json:"Subdivisions"`
+	Traits             Traits             `maxminddb:"traits"              json:"Traits"`
 }
 
-// The ConnectionType structure corresponds to the data in the GeoIP2
-// Connection-Type database.
+// ConnectionType corresponds to the data in the GeoIP2 Connection-Type database.
 type ConnectionType struct {
-	ConnectionType string `maxminddb:"connection_type"`
+	ConnectionType string `maxminddb:"connection_type" json:"ConnectionType"`
 }
 
-// The Domain structure corresponds to the data in the GeoIP2 Domain database.
+// Domain corresponds to the data in the GeoIP2 Domain database.
 type Domain struct {
-	Domain string `maxminddb:"domain"`
+	Domain string `maxminddb:"domain" json:"Domain"`
 }
 
-// The ISP structure corresponds to the data in the GeoIP2 ISP database.
+// ISP corresponds to the data in the GeoIP2 ISP database.
 type ISP struct {
-	AutonomousSystemNumber       uint   `maxminddb:"autonomous_system_number"`
-	AutonomousSystemOrganization string `maxminddb:"autonomous_system_organization"`
-	ISP                          string `maxminddb:"isp"`
-	Organization                 string `maxminddb:"organization"`
+	AutonomousSystemNumber       uint   `maxminddb:"autonomous_system_number"       json:"AutonomousSystemNumber"`
+	AutonomousSystemOrganization string `maxminddb:"autonomous_system_organization" json:"AutonomousSystemOrganization"`
+	ISP                          string `maxminddb:"isp"                            json:"ISP"`
+	Organization                 string `maxminddb:"organization"                   json:"Organization"`
 }
 
-// Reader holds the maxminddb.Reader structure. It should be created
-// using the Open function.
+// Reader holds the maxminddb.Reader structure.
 type Reader struct {
 	mmdbReader *maxminddb.Reader
 }
 
-// Open takes a string path to a file and returns a Reader structure or an
-// error. The database file is opened using a memory map. Use the Close method
-// on the Reader object to return the resources to the system.
+// Open takes a path to a file and returns a Reader or an error.
 func Open(file string) (*Reader, error) {
 	reader, err := maxminddb.Open(file)
 	return &Reader{mmdbReader: reader}, err
 }
 
-// FromBytes takes a byte slice corresponding to a GeoIP2/GeoLite2 database
-// file and returns a Reader structure or an error.
+// FromBytes takes a byte slice and returns a Reader or an error.
 func FromBytes(bytes []byte) (*Reader, error) {
 	reader, err := maxminddb.FromBytes(bytes)
 	return &Reader{mmdbReader: reader}, err
 }
 
-// City takes an IP address as a net.IP struct and returns a City struct
-// and/or an error. Although this can be used with other databases, this
-// method generally should be used with the GeoIP2 or GeoLite2 City databases.
+// City looks up the city data for the given IP address.
 func (r *Reader) City(ipAddress net.IP) (*City, error) {
 	var city City
 	err := r.mmdbReader.Lookup(ipAddress, &city)
 	return &city, err
 }
 
-// Country takes an IP address as a net.IP struct and returns a Country struct
-// and/or an error. Although this can be used with other databases, this
-// method generally should be used with the GeoIP2 or GeoLite2 Country
-// databases.
+// Country looks up the country data for the given IP address.
 func (r *Reader) Country(ipAddress net.IP) (*Country, error) {
 	var country Country
 	err := r.mmdbReader.Lookup(ipAddress, &country)
 	return &country, err
 }
 
-// ConnectionType takes an IP address as a net.IP struct and returns a
-// ConnectionType struct and/or an error
+// ConnectionType looks up the connection type for the given IP address.
 func (r *Reader) ConnectionType(ipAddress net.IP) (*ConnectionType, error) {
 	var val ConnectionType
 	err := r.mmdbReader.Lookup(ipAddress, &val)
 	return &val, err
 }
 
-// Domain takes an IP address as a net.IP struct and returns a
-// Domain struct and/or an error
+// Domain looks up the domain for the given IP address.
 func (r *Reader) Domain(ipAddress net.IP) (*Domain, error) {
 	var val Domain
 	err := r.mmdbReader.Lookup(ipAddress, &val)
 	return &val, err
 }
 
-// ISP takes an IP address as a net.IP struct and returns a ISP struct and/or
-// an error
+// ISP looks up the ISP data for the given IP address.
 func (r *Reader) ISP(ipAddress net.IP) (*ISP, error) {
 	var val ISP
 	err := r.mmdbReader.Lookup(ipAddress, &val)
 	return &val, err
 }
 
-// Close unmaps the database file from virtual memory and returns the
-// resources to the system.
+// Close releases the resources held by the Reader.
 func (r *Reader) Close() {
 	r.mmdbReader.Close()
 }
+
