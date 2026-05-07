@@ -33,5 +33,5 @@ COPY --from=builder /app/*.mmdb .
 
 EXPOSE 5000
 
-CMD ["/app/geoip-service" ]
-
+ENTRYPOINT ["/app/geoip-service"]
+CMD []
