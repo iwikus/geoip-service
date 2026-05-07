@@ -19,27 +19,18 @@ docker run --rm -p 5000:5000 ghcr.io/iwikus/geoip-service:latest
 
 Query: `http://localhost:5000/1.2.3.4`
 
-## Mount your own database instead
-
-```bash
-docker run --rm \
-  -p 5000:5000 \
-  -v /path/to/GeoLite2-City.mmdb:/data/geodb.mmdb \
-  ghcr.io/iwikus/geoip-service:latest
-```
-
 ## Available databases in the image
 
 | Path | Type |
 |------|------|
-| `/data/GeoLite2-City.mmdb` | City (default) |
-| `/data/GeoLite2-Country.mmdb` | Country |
-| `/data/GeoLite2-ASN.mmdb` | ASN |
+| `/app/GeoLite2-City.mmdb` | City (default) |
+| `/app/GeoLite2-Country.mmdb` | Country |
+| `/app/GeoLite2-ASN.mmdb` | ASN |
 
 Switch database at runtime:
 ```bash
 docker run --rm -p 5000:5000 ghcr.io/iwikus/geoip-service:latest \
-  /app/geoip-service -db=/data/GeoLite2-Country.mmdb -lookup=country
+  /app/geoip-service -db=/app/GeoLite2-Country.mmdb -lookup=country
 ```
 
 ## Auto-update schedule
