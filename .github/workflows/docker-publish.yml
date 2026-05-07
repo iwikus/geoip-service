@@ -24,6 +24,9 @@ jobs:
         uses: actions/checkout@v4
 
       # ── Download latest GeoLite2 databases from P3TERX/GeoLite.mmdb ──────────
+      - name: Create data directory
+        run: mkdir -p data
+
       - name: Download GeoLite2 City database
         run: |
           curl -sSL \
